@@ -1,19 +1,16 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
-#include <stdio.h>
 #include "processor.h"
 #include "memory.h"
 
 
-struct Emulator6502 {
-	struct Processor6502 *processor;
-	struct Memory6502 *memory;
-	FILE *asmFile;
-};
+struct Emulator {
+	struct Processor *cpu;
+	struct Memory *mem;
 
-
-struct Emulator6502 *Emulator6502_init(FILE *asmFile);
+	bool running;
+}
 
 
 #endif //EMULATOR_H

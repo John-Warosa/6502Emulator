@@ -1,16 +1,29 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include "myint.h"
+#include <stdint.h>
 
 
-struct Memory6502 {
-	u8 *bytes;
+struct MemoryBlock {
+	uint16_t start;
+	uint16_t end;
+	uint16_t size;
+
+	uint8_t *memory;
 };
 
 
-struct Memory6502 *Memory6502_init(void);
+struct Memory {
+	struct MemoryBlock *ram;
+	struct MemoryBlock *input;
+	struct MemoryBlock *video;
+	struct MemoryBlock *rom;
+};
 
-u8 *getMemoryPage(u8 memoryPageIndex);
+
+struct MemoryBlock *MemoryBlock_init(uint16_t start, uint16_t end);
+
+struct Memory *Memory_init();
+
 
 #endif //MEMORY_H

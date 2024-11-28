@@ -1,40 +1,24 @@
-#include <stdlib.h>
 #include "processor.h"
-#include "errors.h"
+#include <stdlib.h>
 
 
-static struct Status6502 StatusFlags_init(void) {
-	struct Status6502 statusFlags = {
-		.sign = 0,
-		.overflow = 0,
-		.unused = 1,
-		.softBreak = 1,
-		.decimal = 0,
-		.interrupt = 0,
-		.zero = 0,
-		.carry = 0,
-	};
+struct Processor *Processor_init() {
+	struct Processor *cpu = malloc(sizeof(*cpu));
 
-	return statusFlags;
-};
-
-
-struct Processor6502 *Processor6502_init(void) {
-	struct Processor6502 *cpu = malloc(sizeof(cpu));
-
-	// fatalError exits program
 	if (cpu == nullptr) {
-		fatalError(ProcessorInitFailed);
+		fprintf(stderr, "alloc failed");
+		exit(-1);
 	}
 
-	cpu->programCounter = 0; //getVals(0xfffc, 0xfffd); // TODO: add real function
-	cpu->stackPointer = 0xff;
-
+	// registers
 	cpu->accumulator = 0x00;
 	cpu->xRegister = 0x00;
 	cpu->yRegister = 0x00;
-
-	cpu->statusFlags = StatusFlags_init();
+	
+	// status flags
+	cpu->statsFlags = {
+		.unused = 1
+	}
 
 	return cpu;
-};
+}

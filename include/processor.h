@@ -1,33 +1,37 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-#include "myint.h"
+#include <stdint.h>
 
 
-struct Status6502 {
-	unsigned int sign		: 1;
-	unsigned int overflow	: 1;
-	unsigned int unused		: 1;
-	unsigned int softBreak	: 1;
-	unsigned int decimal	: 1;
-	unsigned int interrupt	: 1;
-	unsigned int zero		: 1;
-	unsigned int carry		: 1;
+struct Processor {
+	// registers
+	uint8_t accumulator;
+	uint8_t xRegister;
+	uint8_t yRegister;
+	
+	// memory pointers
+	uint8_t stackPointer;
+	uint16_t programCounter;
+
+	// status flags
+	struct {
+		unsigned int carry		:	1;
+		unsigned int zero		:	1;
+		unsigned int interrupt	:	1;
+		unsigned int decimal	:	1;
+		unsigned int break		:	1;
+		unsigned int unused		:	1;
+		unsigned int overflow	:	1;
+		unsigned int negative	:	1;
+	} statusFlags;
 };
 
-struct Processor6502 {
-	u16 programCounter;
-	u8 stackPointer;
 
-	u8 accumulator;
-	u8 xRegister;
-	u8 yRegister;
-
-	struct Status6502 statusFlags;
-};
+struct Processor *Processor_init();
 
 
-struct Processor6502 *Processor6502_init(void);
+void Processor_start(struct Processor cpu);
 
 
 #endif //PROCESSOR_H
