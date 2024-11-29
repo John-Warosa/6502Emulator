@@ -3,7 +3,8 @@
 
 
 int main() {
-	auto emu = Emulator_init();
+	struct Emulator *emu = Emulator_init();
+	emu = nullptr;
 
 	//debuprint(emu);
 	
