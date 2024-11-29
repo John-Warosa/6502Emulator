@@ -20,7 +20,7 @@ struct Processor {
 		unsigned int zero		:	1;
 		unsigned int interrupt	:	1;
 		unsigned int decimal	:	1;
-		unsigned int break		:	1;
+		unsigned int breaks		:	1;
 		unsigned int unused		:	1;
 		unsigned int overflow	:	1;
 		unsigned int negative	:	1;
@@ -30,8 +30,9 @@ struct Processor {
 
 struct Processor *Processor_init();
 
+void Processor_free(struct Processor *cpu);
 
-void Processor_start(struct Processor cpu);
+void Processor_start(struct Processor *cpu);
 
 
 #endif //PROCESSOR_H

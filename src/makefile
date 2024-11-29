@@ -8,15 +8,15 @@ LDIR = ../lib
 
 LIBS = -lm
 
-_DEPS = emulator.h errors.h instructions.h memory.h	myint.h processor.h
+_DEPS = emulator.h memory.h	processor.h
 DEPS = $(patsubst %, $(IDIR)/%, $(_DEPS))
 
-_OBJ = main.o emulator.o errors.o instructions.o memory.o processor.o
+_OBJ = main.o emulator.o memory.o processor.o
 OBJ = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
 
 $(ODIR)/%.o: %.c $(DEPS)
-	$(CC) -std=c23 -c -o $@ $< $(CFLAGS)
+	$(CC) -std=c23 -Wall -Wpedantic -Wall -c -o $@ $< $(CFLAGS)
 
 6502Emulator: $(OBJ)
 	$(CC) -std=c23 -o ../$@ $^ $(CFLAGS) $(LIBS)

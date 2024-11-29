@@ -1,5 +1,6 @@
 #include "memory.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 #define NUM_BLOCKS 4
 
@@ -12,15 +13,15 @@
  * unmapped regions will be unusable
  */
 static const uint16_t memoryMap[2*NUM_BLOCKS] = {
-	0x0000, 0x1fff		// 8KB for RAM 
-	0x2000, 0x2fff		// 1KB for input
-	0x3000, 0x7fff		// 20KB for video output (160x128)
-	0x8000, 0xffff		// 32KB for ROM
+	0x0000, 0x1fff,		// 8KB for RAM 
+	0x2000, 0x2fff,		// 1KB for input
+	0x3000, 0x7fff,		// 20KB for video output (160x128)
+	0x8000, 0xffff,		// 32KB for ROM
 };
 
 
 struct MemoryBlock *MemoryBlock_init(uint16_t start, uint16_t end) {
-	struct MemoryBlock *memBlock = malloc(sizeof(*memBlcok));
+	struct MemoryBlock *memBlock = malloc(sizeof(*memBlock));
 
 	if (memBlock == nullptr) {
 		fprintf(stderr, "alloc failed");
@@ -48,4 +49,14 @@ struct Memory *Memory_init() {
 	mem->rom = MemoryBlock_init(memoryMap[6], memoryMap[7]);
 
 	return mem;
+}
+
+
+void Memory_free(struct Memory *mem) {
+	free(mem->ram);
+	free(mem->input);
+	free(mem->video);
+	free(mem->rom);
+
+	free(mem);
 }

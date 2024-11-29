@@ -25,5 +25,7 @@ struct MemoryBlock *MemoryBlock_init(uint16_t start, uint16_t end);
 
 struct Memory *Memory_init();
 
+void Memory_free(struct Memory *mem);
+
 
 #endif //MEMORY_H

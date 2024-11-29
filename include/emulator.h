@@ -10,7 +10,12 @@ struct Emulator {
 	struct Memory *mem;
 
 	bool running;
-}
+};
+
+
+struct Emulator *Emulator_init();
+
+void Emulator_free(struct Emulator *emu);
 
 
 #endif //EMULATOR_H
